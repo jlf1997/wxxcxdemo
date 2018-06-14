@@ -31,7 +31,13 @@ var test = function(that){
     //   'Cookie': that.data.cookie
     // },
     success:function(res){
-        console.info(res);
+        if(util.isNull(res.data)){
+           
+        }else{
+          wx.showToast({
+            title: '请求成功',
+          });
+        }
     }
   })
 

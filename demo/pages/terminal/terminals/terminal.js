@@ -1,5 +1,6 @@
 // pages/terminal/terminals/terminal.js
 
+var appRequest = require('../../../utils/app.request.js')
 var app = getApp();
 
 Page({
@@ -9,7 +10,8 @@ Page({
    */
   data: {
     result: '',
-    terid: ''
+    terid: '',
+    terimals :[]
   },
   
 
@@ -22,8 +24,8 @@ Page({
     setTimeout(function () {
       wx.hideLoading()
     }, 20000)
-    wx.request({
-      url: app.globalData.serverUrl + 'dev/info/' + that.data.terid,
+    appRequest.request({
+      url:  '/iot-sv/wx/dev/getList?page=1',
       method: 'GET',
       header: {
         //设置参数内容类型为json
@@ -31,15 +33,11 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        console.log(res);
+        
         that.setData({
-          result: res.data
+          terimals: res.data.data.data
         });
-        // message = result.id;
-        //全局变量设置
-        // app.r = 1;
-        console.log("返回的结果：" + that.data.result);
-        that.data.message = that.data.result.projectNo;
+       
       },
       fail:function(res){
         wx.hideLoading();

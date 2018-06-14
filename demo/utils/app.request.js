@@ -1,5 +1,5 @@
 var config = require('./config.js');
-var promise = require('./bluebird.core.min.js');
+var promise = require('../libs/bluebird.core.min.js');
 var md5s = require('./MD5.js');
 var util = require('./util.js');
 
@@ -9,7 +9,7 @@ var app = getApp();
 var getOpenidAsy = function (loginCode) {
   return new Promise(function (resolve, reject) {
     wx.request({
-      url: config.serverUrl + '/iot-sv/wxlogin/getOpenid?code=' + loginCode.code,
+      url: config.getOpenidUrl + loginCode.code,
       success: function (res) {
         console.log("res:" + res.data.data);
         var rest = JSON.parse(res.data.data);
@@ -42,10 +42,9 @@ var loginAsy = function () {
 //通过openid获取 凭证
 var getIotAsy = function () {
   return new Promise(function (resolve, reject) {
-    var pass = md5s.MD5('admin' + "#" + 'admin');
+    
     wx.request({
-      url: config.serverUrl + '/iot-sv/wxlogin/login?username=' + 'admin' + '&pswd=' + pass,
-      // data: 'username=' + that.data.account + '&pswd=' + that.data.pwd ,
+      url: config.getLoginTokenUrl + app.globalData.openid ,
       header: {
         'X-Requested-With': 'XMLHttpRequest'
       },
@@ -62,29 +61,61 @@ var getIotAsy = function () {
 
 //修改请求头信息
 var setHeard = function (obj) {
-  //增加头信息
-  var header = obj.header;
-  if (util.isNull(header)) {
-    obj.header = {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Cookie': app.globalData.cookie
+
+  return new Promise(function (resolve, reject) {
+    console.log('1112');
+    //增加头信息
+    var header = obj.header;
+    if (util.isNull(header)) {
+      obj.header = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Cookie': app.globalData.cookie
+      }
+    } else {
+      header["X-Requested-With"] = 'XMLHttpRequest';
+      header['Cookie'] = app.globalData.cookie;
     }
-  } else {
-    header["X-Requested-With"] = 'XMLHttpRequest';
-    header['Cookie'] = app.globalData.cookie;
-  }
-  obj.url = config.serverUrl + obj.url;
-  return obj;
+    obj.url = config.serverUrl + obj.url;
+    var oldSuccess = obj.success;
+    obj.success = function (res) {
+      console.info('res===' + res.data);
+      //判断如果凭证过期
+      if (util.isNull(res.data)) {
+        //过期
+        getIotAsy();
+        wx.showToast({
+          title: '凭证过期，请重试',
+          
+        });
+      } 
+      oldSuccess(res);
+    }
+    resolve(obj);
+
+  })
+  
 }
 
 //判断是否关联微信与业务账号
 var isAssocated = function () {
-  return false;
+  if (app.globalData.isAssocted==false){
+      wx.request({
+        url: config.checkIsAssocatedUrl + app.globalData.openid,
+        success:function(res){
+            console.log(res.data);
+        }
+      })
+ }
+  return app.globalData.isAssocted;
 }
+
+
 
 //关联操作
 var associate = function () {
-
+  return new Promise(function (resolve, reject) {
+    resolve();
+  })
 }
 
 //封装wx  request
@@ -106,22 +137,29 @@ var request = function (obj) {
   //判断是否已经关联
   if (!isAssocated()) {
     //进行关联
-    promise.then(associate());
+    promise =  promise.then(associate());
   }
   //判断是否已经登陆业务服务器
-
+  if (util.isNull(app.globalData.cookie)){
+    promise = promise.then(function () {
+      return getIotAsy();
+    });
+  }
+ 
+  //统一处理header
   promise = promise.then(function () {
-    return getIotAsy();
+    console.log('开始处理header');
+    return setHeard(obj);
+    
   });
 
-  promise.then(function () {
-    console.log(app.globalData.openid);
-    obj = setHeard(obj);
+  //开始请求
+  promise.then(function(newObj){
     console.log('开始请求：' + obj.url);
-    wx.request(obj);
-  });
+    wx.request(newObj);
+  })
 
-
+  
 
 
 

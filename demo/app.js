@@ -59,6 +59,7 @@ App({
     userInfo: null,
     openidInfo:'',
     cookie : null,
-    openid:null
+    openid:null,
+    isAssocted :false
   }
 })
