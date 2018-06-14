@@ -1,0 +1,24 @@
+<!--pages/terminal/iot/iot.wxml-->
+
+
+<view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input login-input">
+        <text class="login-input-cell">账号 </text>
+          <input class="weui-input" maxlength="11" 
+          type="number" placeholder="请输入账号" bindinput="inputAccount"></input>
+        </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input login-input">
+        <text class="login-input-cell">密码 </text>
+          <input class="weui-input"   password
+           placeholder="请输入密码" bindinput="inputPwd"></input>
+        </view>
+  </view>
+
+<button class='weui-btn' bindtap='getIot'type = 'primary'>登录</button>
+
+<button class='weui-btn' bindtap='test'type = 'primary'>请求测试</button>
+
+<button class='weui-btn' bindtap='demo'type = 'primary'>demo</button>

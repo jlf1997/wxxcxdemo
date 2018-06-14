@@ -1,0 +1,11 @@
+<!--pages/button/button.wxml-->
+<button type='default' size='default' form-type='submit' bindtap="clickMe"
+ class="weui-btn" type="primary">test</button>
+
+
+
+<button bindtap='toTerminalInfo' class="weui-btn" type="primary">查看终端信息页面</button>
+<button bindtap='toVideo' class="weui-btn" type="primary">进入音乐播放demo</button>
+<button bindtap='toAudio' class="weui-btn" type="primary">进入视频播放demo</button>
+
+<button bindtap='toIot' class="weui-btn" type="primary">测试访问shiro平台</button>

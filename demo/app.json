@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/map/regeocoding",
+    "pages/button/button",
+    "pages/terminal/terminals/terminal",
+    "pages/terminal/video/video",
+    "pages/terminal/audio/audio",
+    "pages/index/login/login",
+    "pages/terminal/iot/iot"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index"
+      },
+      {
+        "text": "地图",
+        "pagePath": "pages/map/regeocoding"
+      },
+      {
+        "text": "log",
+        "pagePath": "pages/logs/logs"
+      },
+      {
+        "text": "button",
+        "pagePath": "pages/button/button"
+      }
+    ]
+  }
+}

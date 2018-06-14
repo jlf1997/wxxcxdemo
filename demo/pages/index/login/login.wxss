@@ -1,0 +1,13 @@
+/* pages/index/login/login.wxss */
+.inputass{
+  margin:40rpx  40rpx 40rpx 40rpx;
+}
+
+.login-input{
+  height:100rpx;
+}
+.login-input-cell{
+  margin-right:10rpx;
+   margin-left:40rpx;
+  width: 200rpx;
+}
