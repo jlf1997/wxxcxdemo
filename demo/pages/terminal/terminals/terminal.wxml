@@ -5,9 +5,23 @@
 获取终端信息
 </button>
 
+<view class="table">
+        <view class="tr">
+            <view class="th">标题1</view>
+            <view class="th">标题2</view>
+            <view class="th">标题3</view>
+            <view class="th">标题4</view>
+            <view class="th">标题5</view>
+        </view>
+    
+        <view class="tr" wx:for="{{terimals}}"  wx:for-item="item">
+           <view class="td"> {{item.name}} </view>
+           <view class="td">{{item.terminalId}} </view>
+           <view class="td">{{item.createTime}} </view> 
+           <view class="td">{{item.id}} </view> 
+           <view class="td">{{item.createBy}} </view>     
+        </view> 
+</view>
 
-<text wx:for='{{terimals}}' wx:for-item="item">
-  {{item.name}}  {{item.terminalId}} 
-</text>
 
 

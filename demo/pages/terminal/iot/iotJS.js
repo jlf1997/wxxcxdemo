@@ -26,7 +26,7 @@ var getIot = function(that){
 var test = function(that){
 
   appRequset.request({
-      url: '/iot-sv/wx/dev/getList?page=1',
+      url: '/iot-sv/wx/dev/getList?page=10',
     // header: {
     //   'Cookie': that.data.cookie
     // },

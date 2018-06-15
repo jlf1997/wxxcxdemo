@@ -63,7 +63,6 @@ var getIotAsy = function () {
 var setHeard = function (obj) {
 
   return new Promise(function (resolve, reject) {
-    console.log('1112');
     //增加头信息
     var header = obj.header;
     if (util.isNull(header)) {
@@ -85,7 +84,7 @@ var setHeard = function (obj) {
         getIotAsy();
         wx.showToast({
           title: '凭证过期，请重试',
-          
+
         });
       } 
       oldSuccess(res);
