@@ -41,7 +41,10 @@ Page({
       },
       fail:function(res){
         wx.hideLoading();
-        console.log("fail"+res);
+        console.error("fail:"+res);
+        wx.showToast({
+          title: res
+        })
       }
     })
   },
