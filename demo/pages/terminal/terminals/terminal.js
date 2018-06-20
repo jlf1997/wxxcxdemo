@@ -41,9 +41,7 @@ Page({
       },
       fail: function (res) {
         wx.hideLoading();
-        util.writeObj(res);
         console.error("fail:" + res);
-        
       }
     })
   },

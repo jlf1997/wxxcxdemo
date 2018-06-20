@@ -37,7 +37,7 @@ var loginAsy = function () {
       success: function (loginCode) {
         resolve(loginCode);
       },
-      fail: function (res) {
+      fail:function(res){
         reject(res);
       }
     })
@@ -56,13 +56,12 @@ var getIotAsy = function () {
         'X-Requested-With': 'XMLHttpRequest'
       },
       success: function (res) {
-        if (res.data.success == true) {
+        if (res.data.success==true){
           app.globalData.cookie = res.header['Set-Cookie'];
           resolve();
-        } else {
+        }else{
           reject('登录失败，关联的账户已失效，重新关联或者联系管理员');
         }
-
       }
     })
   })
@@ -94,13 +93,11 @@ var setHeard = function (obj) {
       if (res.data == "reLogin" || util.isNull(res.data)) {
         //过期
         console.error('凭证过期，请重试');
-        getIotAsy();
-    
+        getIotAsy(); 
         // reject('凭证过期，请重试');
-      } else {
+      }else{
         oldSuccess(res);
-      }
-
+      }      
     }
     resolve(obj);
 
@@ -120,11 +117,11 @@ var isAssocated = function () {
           resolve();
         }
       })
-    } else {
+    }else{
       resolve();
     }
-
   })
+ 
 
 }
 
@@ -154,11 +151,11 @@ var request = function (obj) {
   }
 
   //判断是否已经关联
-
-  promise = promise.then(function () {
+  promise = promise.then(function (){
     return isAssocated()
   });
-  if (app.globalData.isAssocted == true) {
+  if (app.globalData.isAssocted==true) {
+
     //进行关联
     promise = promise.then(associate());
   }
@@ -176,28 +173,22 @@ var request = function (obj) {
     return setHeard(obj);
 
   });
-
+ 
   //开始请求
-
-  promise.then(function (newObj) {
-    console.log('开始请求：' + obj.url);
-    wx.request(newObj);
-  }).catch(function (error) {
-
+    promise.then(function (newObj) {
+      console.log('开始请求：' + obj.url);
+      wx.request(newObj);
+    }) 
+    .catch(function (error) {
+     
       var failFun = obj.fail;
-      if (!util.isNull(failFun)) {
+      if (!util.isNull(failFun)){
         failFun(error);
-      } else {
-        console.error('error: ' + error);
+      }else{
+        console.error('error: ' + error); 
       }
-
+     
     });
-
-
-
-
-
-
 
 }
 
