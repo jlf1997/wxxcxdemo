@@ -1,56 +1,18 @@
-// pages/button/button.js
-const config = require('../../utils/config.js')
-
-var app = getApp();
+// pages/terminal/out/out.js
 Page({
-
-
- 
 
   /**
    * 页面的初始数据
    */
   data: {
-    message: 'Hello MINA!'
-   
+  
   },
-
-  clickMe: function (event) {
-    this.setData({ message: "Hello World" });
-     console.log(event);
-    
-  },
-
-  toVideo :function(){
-    wx.navigateTo({
-      url: '/pages/terminal/video/video'
-    })
-  },
-  toAudio :function(){
-    wx.navigateTo({
-      url: '/pages/terminal/audio/audio'
-    })
-  },
-
-  toTerminalInfo :function(){
-    wx.navigateTo({
-      url: '/pages/terminal/terminals/terminal'
-    })
-  },
-  toIot :function(){
-    wx.navigateTo({
-      url: '/pages/terminal/iot/iot'
-    })
-  },
-
- 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
-
+  
   },
 
   /**
@@ -99,6 +61,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    console.log('分享');
+  
   }
 })

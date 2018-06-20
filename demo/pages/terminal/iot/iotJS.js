@@ -3,10 +3,12 @@ const util = require('../../../utils/util.js')
 const appRequset = require('../../../utils/app.request.js')
 var md5fun = require('../../terminal/iot/MD5.js');
 
+var appRequest = require('../../../utils/app.request.js')
+
 var getIot = function(that){
   console.log(that.data.account);
   var pass = md5fun.MD5(that.data.account + "#" + that.data.pwd);
-  wx.request({
+  appRequest.request({
     url: config.serverUrl + '/iot-sv/wx/login?username=' + that.data.account + '&pswd=' + pass,
     // data: 'username=' + that.data.account + '&pswd=' + that.data.pwd ,
     header:{

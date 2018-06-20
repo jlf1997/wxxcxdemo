@@ -47,6 +47,7 @@ var loginAsy = function () {
 
 //通过openid获取 凭证
 var getIotAsy = function () {
+  console.info('通过openid获取 凭证');
   return new Promise(function (resolve, reject) {
 
     wx.request({
@@ -89,16 +90,13 @@ var setHeard = function (obj) {
     var oldSuccess = obj.success;
     obj.success = function (res) {
       console.info('res===' + res.data);
-      //判断如果凭证过期
-      util.writeObj(res.data);
-      if (util.isNull(res.data)) {
+   
+      if (res.data == "reLogin" || util.isNull(res.data)) {
         //过期
+        console.error('凭证过期，请重试');
         getIotAsy();
-        wx.showToast({
-          title: '凭证过期，请重试',
-
-        });
-        reject('凭证过期，请重试');
+    
+        // reject('凭证过期，请重试');
       } else {
         oldSuccess(res);
       }
@@ -167,6 +165,7 @@ var request = function (obj) {
   //判断是否已经登陆业务服务器
   if (util.isNull(app.globalData.cookie)) {
     promise = promise.then(function () {
+      console.log('开始请求服务器获取登录许可');
       return getIotAsy();
     });
   }
@@ -183,8 +182,7 @@ var request = function (obj) {
   promise.then(function (newObj) {
     console.log('开始请求：' + obj.url);
     wx.request(newObj);
-  })
-    .catch(function (error) {
+  }).catch(function (error) {
 
       var failFun = obj.fail;
       if (!util.isNull(failFun)) {

@@ -9,3 +9,5 @@
 <button bindtap='toAudio' class="weui-btn" type="primary">进入视频播放demo</button>
 
 <button bindtap='toIot' class="weui-btn" type="primary">测试访问shiro平台</button>
+
+<navigator url='../terminal/out/out'>百度</navigator>

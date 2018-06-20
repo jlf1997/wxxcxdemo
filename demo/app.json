@@ -8,7 +8,8 @@
     "pages/terminal/video/video",
     "pages/terminal/audio/audio",
     "pages/index/login/login",
-    "pages/terminal/iot/iot"
+    "pages/terminal/iot/iot",
+    "pages/terminal/out/out"
   ],
   "window": {
     "backgroundTextStyle": "light",
