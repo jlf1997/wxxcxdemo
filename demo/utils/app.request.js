@@ -11,11 +11,14 @@ var getOpenidAsy = function (loginCode) {
     wx.request({
       url: config.getOpenidUrl + loginCode.code,
       success: function (res) {
-        console.log("res:" + res.data.data);
         var rest = JSON.parse(res.data.data);
-        console.log("opendid:" + rest.openid);
-        app.globalData.openid = rest.openid;
-        resolve();
+        if (util.isNull(rest.openid)){
+          reject('获取openid失败');
+        }else{
+          app.globalData.openid = rest.openid;
+          resolve();
+        }
+       
       },
       fail: function (res) {
         console.log(res);
@@ -34,7 +37,11 @@ var loginAsy = function () {
       success: function (loginCode) {
         resolve(loginCode);
       },
+<<<<<<< HEAD
       fail:function(res){
+=======
+      fail: function (res) {
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
         reject(res);
       }
     })
@@ -45,13 +52,14 @@ var loginAsy = function () {
 //通过openid获取 凭证
 var getIotAsy = function () {
   return new Promise(function (resolve, reject) {
-    
+
     wx.request({
-      url: config.getLoginTokenUrl + app.globalData.openid ,
+      url: config.getLoginTokenUrl + app.globalData.openid,
       header: {
         'X-Requested-With': 'XMLHttpRequest'
       },
       success: function (res) {
+<<<<<<< HEAD
         if (res.data.success==true){
           app.globalData.cookie = res.header['Set-Cookie'];
           resolve();
@@ -59,6 +67,15 @@ var getIotAsy = function () {
           reject('登录失败，关联的账户已失效，重新关联或者联系管理员');
         }
        
+=======
+        if (res.data.success == true) {
+          app.globalData.cookie = res.header['Set-Cookie'];
+          resolve();
+        } else {
+          reject('登录失败，关联的账户已失效，重新关联或者联系管理员');
+        }
+
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
       }
     })
   })
@@ -96,15 +113,22 @@ var setHeard = function (obj) {
 
         });
         reject('凭证过期，请重试');
+<<<<<<< HEAD
       }else{
         oldSuccess(res);
       } 
      
+=======
+      } else {
+        oldSuccess(res);
+      }
+
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
     }
     resolve(obj);
 
   })
-  
+
 }
 
 //判断是否关联微信与业务账号
@@ -119,12 +143,21 @@ var isAssocated = function () {
           resolve();
         }
       })
+<<<<<<< HEAD
     }else{
       resolve();
     }
    
   })
  
+=======
+    } else {
+      resolve();
+    }
+
+  })
+
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
 }
 
 
@@ -153,29 +186,38 @@ var request = function (obj) {
   }
 
   //判断是否已经关联
+<<<<<<< HEAD
   
   promise = promise.then(function (){
     return isAssocated()
   });
   if (app.globalData.isAssocted==true) {
+=======
+
+  promise = promise.then(function () {
+    return isAssocated()
+  });
+  if (app.globalData.isAssocted == true) {
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
     //进行关联
-    promise =  promise.then(associate());
+    promise = promise.then(associate());
   }
   //判断是否已经登陆业务服务器
-  if (util.isNull(app.globalData.cookie)){
+  if (util.isNull(app.globalData.cookie)) {
     promise = promise.then(function () {
       return getIotAsy();
     });
   }
- 
+
   //统一处理header
   promise = promise.then(function () {
     console.log('开始处理header');
     return setHeard(obj);
-    
+
   });
  
   //开始请求
+<<<<<<< HEAD
  
     promise.then(function (newObj) {
       console.log('开始请求：' + obj.url);
@@ -193,8 +235,27 @@ var request = function (obj) {
     });
   
  
+=======
 
-  
+  promise.then(function (newObj) {
+    console.log('开始请求：' + obj.url);
+    wx.request(newObj);
+  })
+    .catch(function (error) {
+
+      var failFun = obj.fail;
+      if (!util.isNull(failFun)) {
+        failFun(error);
+      } else {
+        console.error('error: ' + error);
+      }
+
+    });
+
+
+
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
+
 
 
 

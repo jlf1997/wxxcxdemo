@@ -11,9 +11,9 @@ Page({
   data: {
     result: '',
     terid: '',
-    terimals :[]
+    terimals: []
   },
-  
+
 
   getData: function () {
     var that = this;
@@ -25,7 +25,7 @@ Page({
       wx.hideLoading()
     }, 20000)
     appRequest.request({
-      url:  '/iot-sv/wx/dev/getList?page=1',
+      url: '/iot-sv/wx/dev/getList?page=1',
       method: 'GET',
       header: {
         //设置参数内容类型为json
@@ -33,15 +33,19 @@ Page({
       },
       success: function (res) {
         wx.hideLoading();
-        
+
         that.setData({
           terimals: res.data.data.data
         });
-       
+
       },
-      fail:function(res){
+      fail: function (res) {
         wx.hideLoading();
+<<<<<<< HEAD
         console.error("fail:"+res);
+=======
+        console.error("fail:" + res);
+>>>>>>> f26b658570f4384f3ca27355755c71c8bd447843
         wx.showToast({
           title: res
         })
@@ -59,55 +63,55 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })
